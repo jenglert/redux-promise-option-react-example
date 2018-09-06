@@ -1,4 +1,4 @@
-import { RANDOM_DOG_FETCHED_KEY } from "../actions/randomDogFetched";
+import { RANDOM_DOG_FETCHED_KEY } from "../actions/randomDogPromised";
 
 const defaultState = {
     isPresent: false,

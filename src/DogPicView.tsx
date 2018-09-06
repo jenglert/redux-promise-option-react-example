@@ -6,13 +6,16 @@ import { PromiseOptionProvider } from './context/PromiseOptionContext';
 
 interface IDogPicViewProps {
     randomDog: PromiseOption<string>,
+    getARandomDog: () => any,
 }
 
-const DogImage = (value: string) => (
-    <img src={value} alt='a sweet dog picture' />
-)
+const DogImage = ({ value }: { value: string }) => (<img src={value} alt='a sweet dog picture' />);
 
 export default class DogPicView extends React.PureComponent<IDogPicViewProps> {
+
+    public componentDidMount() {
+        this.props.getARandomDog();
+    }
 
     public render() {
         return (

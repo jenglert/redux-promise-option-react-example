@@ -11,14 +11,15 @@ export class Present extends React.PureComponent<{ children: React.ReactNode }> 
     }
 }
 
-type propsToElement<T> = (value: T) => React.ReactElement<T>;
+// type propsToElement<T> = (value: T) => React.Component<{ value: T }>;
 
-export function whenPresent<T>(Component: propsToElement<T>) {
-    return function WhenPresentComponent(props: any) {
-        return (
-            <PromiseOptionContext.Consumer>
-                {({ isPresent, value }) => isPresent ? <Component {...props} value={value} /> : null}
-            </PromiseOptionContext.Consumer>
-        );
-    };
+export function whenPresent<T>(Component: any) {
+    return (
+        <PromiseOptionContext.Consumer>
+            {({ isPresent, value }) => {
+                return isPresent ? <Component value={value} /> : null
+            }
+            }
+        </PromiseOptionContext.Consumer>
+    );
 }

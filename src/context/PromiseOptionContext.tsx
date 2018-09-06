@@ -1,7 +1,7 @@
 import React from 'react';
 import { PromiseOption } from 'redux-promise-option';
 
-export const PromiseOptionContext = React.createContext<PromiseOption<string>>({
+export const PromiseOptionContext = React.createContext<PromiseOption<any>>({
     isPresent: false,
     value: undefined,
 });
