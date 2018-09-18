@@ -1,11 +1,11 @@
 import React from 'react';
-import { PromiseOption } from 'redux-promise-option';
+import { IPromisedState } from 'redux-promised-state';
 import Absent from './context/Absent';
 import { whenPresent } from './context/Present';
-import { PromiseOptionProvider } from './context/PromiseOptionContext';
+import { PromisedStateProvider } from './context/PromisedStateContext';
 
 interface IDogPicViewProps {
-    randomDog: PromiseOption<string>,
+    randomDog: IPromisedState<string>,
     getARandomDog: () => any,
 }
 
@@ -19,12 +19,12 @@ export default class DogPicView extends React.PureComponent<IDogPicViewProps> {
 
     public render() {
         return (
-            <PromiseOptionProvider value={this.props.randomDog} >
+            <PromisedStateProvider value={this.props.randomDog} >
                 {whenPresent(DogImage)}
                 <Absent>
                     <img src={require('./svg/bars.svg')} alt="loading" />
                 </Absent>
-            </PromiseOptionProvider>
+            </PromisedStateProvider>
         );
     }
 }

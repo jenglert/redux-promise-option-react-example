@@ -1,25 +1,34 @@
 import React from 'react';
-import { PromiseOptionContext } from './PromiseOptionContext';
+import { PromisedStateContext } from './PromisedStateContext';
 
 export class Present extends React.PureComponent<{ children: React.ReactNode }> {
     public render() {
         return (
-            <PromiseOptionContext.Consumer>
-                {({ isPresent }) => isPresent ? this.props.children : null}
-            </PromiseOptionContext.Consumer>
+            <PromisedStateContext.Consumer>
+            {   ({onTransition}) => 
+                    onTransition({
+                        failed: () => null,
+                        finished: (apiResult: any) => this.props.children,
+                        idle: () => null,
+                        running: () => null,
+                })
+           }
+            </PromisedStateContext.Consumer>
         );
     }
 }
 
-// type propsToElement<T> = (value: T) => React.Component<{ value: T }>;
-
 export function whenPresent<T>(Component: any) {
     return (
-        <PromiseOptionContext.Consumer>
-            {({ isPresent, value }) => {
-                return isPresent ? <Component value={value} /> : null
-            }
-            }
-        </PromiseOptionContext.Consumer>
+        <PromisedStateContext.Consumer>
+        {
+            ({onTransition}) => onTransition({
+                failed: () => null,
+                finished: (apiResult: any) => <Component value={apiResult} />,
+                idle: () => null,
+                running: () => null,
+            })
+        }
+        </PromisedStateContext.Consumer>
     );
 }
