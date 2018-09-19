@@ -1,5 +1,6 @@
 import React from 'react';
 import { PromisedStateContext } from './PromisedStateContext';
+import { ReactComponentWithValue } from './Types';
 
 export class Present extends React.PureComponent<{ children: React.ReactNode }> {
     public render() {
@@ -18,7 +19,7 @@ export class Present extends React.PureComponent<{ children: React.ReactNode }> 
     }
 }
 
-export function whenPresent<T>(Component: any) {
+export function whenPresent<T>(Component: ReactComponentWithValue<T>) {
     return (
         <PromisedStateContext.Consumer>
         {

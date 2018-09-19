@@ -1,6 +1,8 @@
 import React from 'react';
 import { IPromisedState } from 'redux-promised-state';
 import Absent from './context/Absent';
+import Failed from './context/Failed';
+import Idle from './context/Idle';
 import { whenPresent } from './context/Present';
 import { PromisedStateProvider } from './context/PromisedStateContext';
 
@@ -18,12 +20,19 @@ export default class DogPicView extends React.PureComponent<IDogPicViewProps> {
     }
 
     public render() {
+        console.log(this.props.randomDog); // tslint:disable-line
         return (
             <PromisedStateProvider value={this.props.randomDog} >
                 {whenPresent(DogImage)}
                 <Absent>
                     <img src={require('./svg/bars.svg')} alt="loading" />
                 </Absent>
+                <Failed>
+                    <h2>The request failed!</h2>
+                </Failed>
+                <Idle>
+                    <h2>The request hasn't started yet</h2> 
+                </Idle>
             </PromisedStateProvider>
         );
     }

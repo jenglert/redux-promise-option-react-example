@@ -4,8 +4,5 @@ import rootReducer from './rootReducer'
 
 
 export default function configureStore() {
-    const middlewares = applyMiddleware(promisedStateMiddleware);
-
-    const store = createStore(rootReducer, {}, middlewares);
-    return store;
+    return createStore(rootReducer, applyMiddleware(promisedStateMiddleware));
 }
