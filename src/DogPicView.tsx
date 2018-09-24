@@ -20,7 +20,6 @@ export default class DogPicView extends React.PureComponent<IDogPicViewProps> {
     }
 
     public render() {
-        console.log(this.props.randomDog); // tslint:disable-line
         return (
             <PromisedStateProvider value={this.props.randomDog} >
                 {whenPresent(DogImage)}
@@ -31,7 +30,7 @@ export default class DogPicView extends React.PureComponent<IDogPicViewProps> {
                     <h2>The request failed!</h2>
                 </Failed>
                 <Idle>
-                    <h2>The request hasn't started yet</h2> 
+                    <h2>The request hasn't started yet</h2>
                 </Idle>
             </PromisedStateProvider>
         );

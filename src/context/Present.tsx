@@ -6,14 +6,14 @@ export class Present extends React.PureComponent<{ children: React.ReactNode }> 
     public render() {
         return (
             <PromisedStateContext.Consumer>
-            {   ({onTransition}) => 
-                    onTransition({
+                {
+                    ({ whenStateIs }) => whenStateIs({
                         failed: () => null,
                         finished: (apiResult: any) => this.props.children,
                         idle: () => null,
                         running: () => null,
-                })
-           }
+                    })
+                }
             </PromisedStateContext.Consumer>
         );
     }
@@ -22,14 +22,14 @@ export class Present extends React.PureComponent<{ children: React.ReactNode }> 
 export function whenPresent<T>(Component: ReactComponentWithValue<T>) {
     return (
         <PromisedStateContext.Consumer>
-        {
-            ({onTransition}) => onTransition({
-                failed: () => null,
-                finished: (apiResult: any) => <Component value={apiResult} />,
-                idle: () => null,
-                running: () => null,
-            })
-        }
+            {
+                ({ whenStateIs }) => whenStateIs({
+                    failed: () => null,
+                    finished: (apiResult: any) => <Component value={apiResult} />,
+                    idle: () => null,
+                    running: () => null,
+                })
+            }
         </PromisedStateContext.Consumer>
     );
 }

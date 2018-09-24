@@ -5,16 +5,14 @@ export default class Idle extends React.PureComponent<{ children: React.ReactNod
     public render() {
         return (
             <PromisedStateContext.Consumer>
-            {   ({onTransition}) => {
-                    console.log('onTransition', onTransition);  // tslint:disable-line
-                    return onTransition({
+                {
+                    ({ whenStateIs }) => whenStateIs({
                         failed: () => null,
                         finished: (apiResult: any) => null,
                         idle: () => this.props.children,
                         running: () => null,
                     })
                 }
-            }
             </PromisedStateContext.Consumer>
         );
     }

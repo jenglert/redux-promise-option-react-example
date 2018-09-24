@@ -5,13 +5,14 @@ export default class Failed extends React.PureComponent<{ children: React.ReactN
     public render() {
         return (
             <PromisedStateContext.Consumer>
-            {   ({onTransition}) => onTransition({
-                    failed: () => this.props.children,
-                    finished: (apiResult: any) => null,
-                    idle: () => null,
-                    running: () => null,
-                })
-            }
+                {
+                    ({ whenStateIs }) => whenStateIs({
+                        failed: () => this.props.children,
+                        finished: (apiResult: any) => null,
+                        idle: () => null,
+                        running: () => null,
+                    })
+                }
             </PromisedStateContext.Consumer>
         );
     }
