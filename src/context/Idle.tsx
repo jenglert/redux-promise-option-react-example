@@ -17,3 +17,20 @@ export default class Idle extends React.PureComponent<{ children: React.ReactNod
         );
     }
 }
+
+export function whenIdle<P>(Component: React.ComponentType<P>): React.StatelessComponent<P> {
+    return (props: P) => {
+        return (
+            <PromisedStateContext.Consumer>
+                {
+                    ({ whenStateIs }) => whenStateIs({
+                        failed: () => null,
+                        finished: (apiResult: any) => null,
+                        idle: () => <Component {...props} />,
+                        running: () => null,
+                    })
+                }
+            </PromisedStateContext.Consumer>
+        );
+    }
+}

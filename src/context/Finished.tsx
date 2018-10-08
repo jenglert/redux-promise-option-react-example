@@ -1,14 +1,15 @@
 import React from 'react';
 import { PromisedStateContext } from './PromisedStateContext';
+import { IPropsWithValue, PropsWithoutValue } from './Types';
 
-export default class Failed extends React.PureComponent<{ children: React.ReactNode }> {
+export class Finished<T> extends React.PureComponent<{ children: React.ReactNode }> {
     public render() {
         return (
             <PromisedStateContext.Consumer>
                 {
                     ({ whenStateIs }) => whenStateIs({
-                        failed: () => this.props.children,
-                        finished: (apiResult: any) => null,
+                        failed: () => null,
+                        finished: (apiResult: T) => this.props.children,
                         idle: () => null,
                         running: () => null,
                     })
@@ -18,14 +19,15 @@ export default class Failed extends React.PureComponent<{ children: React.ReactN
     }
 }
 
-export function whenFailed<P>(Component: React.ComponentType<P>): React.StatelessComponent<P> {
-    return (props: P) => {
+export function whenFinished<T, P extends IPropsWithValue<T>>(Component: React.ComponentType<P>): 
+            React.StatelessComponent<PropsWithoutValue<P>> {
+    return (props: PropsWithoutValue<P>) => {
         return (
             <PromisedStateContext.Consumer>
                 {
                     ({ whenStateIs }) => whenStateIs({
-                        failed: () => <Component {...props} />,
-                        finished: (apiResult: any) => null,
+                        failed: () => null,
+                        finished: (apiResult: T) => <Component {...props} value={apiResult} />,
                         idle: () => null,
                         running: () => null,
                     })
